@@ -1,20 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit'
-
-import { carrinhoApi } from '../services/api'
-
-import carrinhoReducer from '../reducer/carrinho' // importa seu slice aqui
+import { apiSlice } from '../slices/apiSlice'
+import cartReducer from '../slices/cartSlice'
+import favoritesReducer from '../slices/favoritesSlice'
 
 export const store = configureStore({
   reducer: {
-    [carrinhoApi.reducerPath]: carrinhoApi.reducer,
-
-    carrinho: carrinhoReducer // adiciona o reducer do carrinho
+    [apiSlice.reducerPath]: apiSlice.reducer,
+    cart: cartReducer,
+    favorites: favoritesReducer
   },
-
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(carrinhoApi.middleware)
+    getDefaultMiddleware().concat(apiSlice.middleware)
 })
 
 export type RootState = ReturnType<typeof store.getState>
-
 export type AppDispatch = typeof store.dispatch
